@@ -1,6 +1,11 @@
 #!/bin/bash
-cd ../folder_source
-for f in *.html
-do
-cp -v "$f"  ../../folder_destination/"${f%.html}".html
+parent_dir="../"
+for file in *.html; do
+    if [[ ! -e "${parent_dir}${file}" ]] || [[ "$file" -nt "${parent_dir}${file}" ]]; then
+        cp "$file" "$parent_dir"
+        echo "Copied: $file to $parent_dir"
+    else
+        echo "Skipped: $file (exists and is not newer)"
+    fi
 done
+
